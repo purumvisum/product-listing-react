@@ -1,3 +1,29 @@
+
+/*Product*/
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-amount {
+  margin-left: 10px;
+}
+
+/*Article*/
+.article-box {
+  margin-bottom: 10px;
+}
+
+.prop-title {
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.prop-value {
+  font-size: 12px;
+}
+
+
 .loading-box {
   display: flex;
   justify-content: center;
@@ -8,4 +34,24 @@
 
 .loading-text {
   margin-top: 10px!important;
+}
+
+.wait-response {
+  position: absolute;
+  top: 45%;
+  right: 45%;
+  z-index: 99999;
+}
+
+.wait-overlay {
+  position: fixed;
+  width: 100%;
+  height: 101%;
+  background: black;
+  z-index: 999;
+  opacity: 0.7;
+}
+
+.wait-text {
+  color: white;
 }

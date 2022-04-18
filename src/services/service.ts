@@ -1,5 +1,5 @@
 // config
-import {ARTICLES, PRODUCTS} from '../config';
+import {ARTICLES, IArticle, PRODUCTS, SALES} from '../config';
 
 
 class Service {
@@ -14,11 +14,26 @@ class Service {
         }
     }
 
+    // Add sell
+    static async addSell(id: string) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId: id, amountSold:1 })
+        };
+        const response = await fetch(SALES, requestOptions);
+
+        const jsonResponse = await response.json();
+        return {
+            status: response.ok,
+            response: JSON.parse(JSON.stringify(jsonResponse))
+        }
+    }
+
     // get all products and articles
     static async getAllProductsAndArticles() {
         const products = await Service.getAll(PRODUCTS);
         const articles = await Service.getAll(ARTICLES);
-        const result = {products: [], articles: []}
         if (products.status && articles.status) {
             return {
                 products: products.response,
@@ -36,10 +51,33 @@ class Service {
 
     }
 
+    // Buy a product
+    static async buyProduct(id:string, articles: IArticle[]) {
+        const sold = await ServiceEngine.addSell(id);
+        if (sold.status) {
+            Promise.all(articles.map((article)=>{
+                const requestOptions = {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({amountToSubtract: article.amountRequired })
+                };
+                return fetch(`${ARTICLES}/${article.id}`, requestOptions);
+            })).then(values => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error(error.message)
+            });
+        }
+
+    }
+
 
 }
 
 export const ServiceEngine = {
     getAll: (type:string) => Service.getAll(type),
     getAllProductsAndArticles: () => Service.getAllProductsAndArticles(),
+    buyProduct: (id:string, articles:IArticle[]) => Service.buyProduct(id, articles),
+    addSell: (id:string) => Service.addSell(id),
 };

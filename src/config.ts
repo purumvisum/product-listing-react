@@ -3,6 +3,7 @@ export const IMAGE300 = "https://via.placeholder.com/300.webp/";
 
 export const PRODUCTS = `${LOCAL_ENV}products/`;
 export const ARTICLES = `${LOCAL_ENV}articles/`;
+export const SALES = `${LOCAL_ENV}sales/`;
 
 // Types
 
@@ -12,7 +13,7 @@ export interface IArticle {
 }
 
 export interface IProduct {
-    articles?: IArticle[];
+    articles: IArticle[];
     id: string;
     name: string
 }
@@ -22,6 +23,7 @@ export interface IProductListing {
     id: string;
     name: string,
     allArticles: IArticleDetails[];
+    buyProduct: any;
 }
 
 export interface IProductsWithArticles {

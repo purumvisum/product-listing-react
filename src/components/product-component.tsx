@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
@@ -10,7 +9,10 @@ import Chip from '@mui/material/Chip';
 
 import Article from "./article";
 
-import {IArticle, IArticleDetails, IMAGE300, IProductListing, IProductsWithArticles} from '../config'
+// css
+import '../App.css';
+
+import {IArticle, IArticleDetails, IProductListing} from '../config'
 import {useState} from "react";
 import {useEffect} from "react";
 
@@ -18,7 +20,7 @@ export default function Product(props:IProductListing ) {
 
     const [amount, setAmount] = useState<number>(0);
 
-    const {articles, id, name, allArticles}= props;
+    const {articles, id, name, allArticles, buyProduct}= props;
 
     useEffect(() => {
         if(articles) {
@@ -42,19 +44,19 @@ export default function Product(props:IProductListing ) {
 
 
 
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-                component="img"
-                height="194"
-                image={IMAGE300}
-                alt="Paella dish"
-            />
+        <Card>
             <CardContent>
-                <Typography variant="h5" component="div">
-                    {name}
-                </Typography>
-                <Chip label={amount} />
+                <div className="product-info">
+                    <Typography variant="h5" component="div">
+                        {name}
+                    </Typography>
+                    <Chip className="product-amount" label={amount} />
+                </div>
+                <div><span className="prop-title">Product Id:</span> <span className="prop-title">{id}</span></div>
+
+                <br/>
                 {
                     // Find articles for the current product
                     articles?.map((article:IArticle)=>{
@@ -68,6 +70,7 @@ export default function Product(props:IProductListing ) {
                                     name={articleForProduct.name}
                                     amountForProduct = {article.amountRequired}
                                     amountInStock={articleForProduct.amountInStock}
+                                    key={articleForProduct.id}
                                 />
                             )
                         }
@@ -76,7 +79,11 @@ export default function Product(props:IProductListing ) {
                 }
             </CardContent>
             <CardActions>
-                <Button size="small">Buy</Button>
+                <Button
+                    disabled = {!amount}
+                    variant="contained"
+                    onClick={buyProduct}
+                    size="small">Buy</Button>
             </CardActions>
         </Card>
     );
