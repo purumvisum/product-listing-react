@@ -1,0 +1,11 @@
+.loading-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.loading-text {
+  margin-top: 10px!important;
+}
