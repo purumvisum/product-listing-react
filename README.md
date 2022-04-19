@@ -5,9 +5,4 @@ product listing solution for available API
 
 `npm run lint` for eslint 
 
-
-Sale: 
-First update sales then subtract all articles 
-
-Opinion: Sale Api should remove articles from the list of articles. 
-Error Handling for sales might be done on the backend. 
+`npm test` for test
