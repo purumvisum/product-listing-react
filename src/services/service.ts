@@ -62,7 +62,7 @@ class Service {
                     body: JSON.stringify({amountToSubtract: article.amountRequired })
                 };
                 return fetch(`${ARTICLES}/${article.id}`, requestOptions);
-            })).then(values => {
+            })).then(() => {
                 window.location.reload();
             })
             .catch(error => {
@@ -76,7 +76,6 @@ class Service {
 }
 
 export const ServiceEngine = {
-    getAll: (type:string) => Service.getAll(type),
     getAllProductsAndArticles: () => Service.getAllProductsAndArticles(),
     buyProduct: (id:string, articles:IArticle[]) => Service.buyProduct(id, articles),
     addSell: (id:string) => Service.addSell(id),

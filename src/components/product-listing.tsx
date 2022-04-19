@@ -11,7 +11,6 @@ import {IProduct,IArticle,IProductsWithArticles} from "../config";
 
 import {ServiceEngine} from "../services/service";
 import Product from "./product-component";
-import ErrorBoundary from "./error-boundary";
 
 function ProductListing() {
     const [apiResponse, setApiResponse] = useState<IProductsWithArticles | undefined>();
@@ -41,7 +40,6 @@ function ProductListing() {
 
 
     return (
-        <ErrorBoundary message={"can't render listing"}>
             <Box sx={{ flexGrow: 1 }}>
                 {errorMessage && <div className="loading-box">{errorMessage}</div>}
                 {!errorMessage && !apiResponse &&
@@ -88,7 +86,6 @@ function ProductListing() {
 
                 </Grid>
             </Box>
-        </ErrorBoundary>
     )
 
 

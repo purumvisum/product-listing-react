@@ -1,5 +1,4 @@
 export const LOCAL_ENV = "http://localhost:7000/";
-export const IMAGE300 = "https://via.placeholder.com/300.webp/";
 
 export const PRODUCTS = `${LOCAL_ENV}products/`;
 export const ARTICLES = `${LOCAL_ENV}articles/`;
@@ -23,6 +22,7 @@ export interface IProductListing {
     id: string;
     name: string,
     allArticles: IArticleDetails[];
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     buyProduct: any;
 }
 
