@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 // Material
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,20 +13,17 @@ import {ServiceEngine} from "../services/service";
 import Product from "./product-component";
 
 function ProductListing() {
-    const [apiResponse, setApiResponse] = useState<IProductsWithArticles | undefined>();
-    const [errorMessage, setErrorMessage] = useState<string>();
-    const [buyItem, setBuyItem] = useState<boolean>(false);
+    const [apiResponse, setApiResponse] = React.useState<IProductsWithArticles | undefined>();
+    const [buyItem, setBuyItem] = React.useState<boolean>(false);
 
     const {getAllProductsAndArticles, buyProduct} = ServiceEngine;
 
     useEffect(() => {
-
         getAllProductsAndArticles().then((result:IProductsWithArticles|undefined)=> {
             if(result && !result.error) {
-                setApiResponse(result);
-                setErrorMessage(undefined)
+                setApiResponse({...result, errorMessage: undefined});
             } else if (!result || result.error) {
-                setErrorMessage("Something went wrong. Please, reload the page")
+                setApiResponse({products:[], articles:[], errorMessage: "Something went wrong. Please, reload the page"});
             }
 
         });
@@ -37,12 +34,10 @@ function ProductListing() {
         buyProduct(id, articles);
     }
 
-
-
     return (
             <Box sx={{ flexGrow: 1 }}>
-                {errorMessage && <div className="loading-box">{errorMessage}</div>}
-                {!errorMessage && !apiResponse &&
+                {apiResponse?.errorMessage && <div className="loading-box">{apiResponse.errorMessage}</div>}
+                {!apiResponse?.errorMessage && !apiResponse &&
                 <Box
                     className="loading-box">
                     <div>
@@ -69,7 +64,7 @@ function ProductListing() {
                     </div>
                 }
                 <Grid container spacing={1}>
-                    { apiResponse?.products.map((product: IProduct) => {
+                    { apiResponse?.products?.map((product: IProduct) => {
                         return (
                             <Grid key = {product.id+product.name.trim()} item xs={4}>
                                 <div className="product-listing">

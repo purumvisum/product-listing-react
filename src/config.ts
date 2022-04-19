@@ -27,9 +27,10 @@ export interface IProductListing {
 }
 
 export interface IProductsWithArticles {
-    products: IProduct[];
-    articles: IArticleDetails[];
+    products: IProduct[] | [];
+    articles: IArticleDetails[] | [];
     error?: boolean;
+    errorMessage?: string | undefined;
 }
 
 
@@ -37,7 +38,7 @@ export interface IArticleDetails {
     id: string;
     name: string;
     amountInStock: number;
-    amountForProduct: number;
+    amountForProduct?: number;
 }
 
 
